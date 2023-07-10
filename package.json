@@ -1,26 +1,13 @@
 {
+  "name": "trading-app-admin-fe",
+  "private": true,
   "version": "1.0.0",
   "engines": {
     "node": ">=14.16",
-    "npm": ">=6.14.11"
+    "npm": ">=6.14.11",
+    "yarn": ">=1.22"
   },
-  "author": "Nilesh Kant",
-  "license": "MIT",
-  "name": "type-express",
-  "description": "REST API boilerplate builded with Express.js, Typescript, TypeORM and Postgres",
-  "keywords": [
-    "nodejs",
-    "express.js",
-    "typescript",
-    "typeorm",
-    "boilerplate",
-    "api",
-    "rest",
-    "restful",
-    "es2017",
-    "postgres",
-    "mysql"
-  ],
+  "description": "",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/chai": "^4.3.0",
