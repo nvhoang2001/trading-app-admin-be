@@ -1,22 +1,14 @@
-import { Balance } from 'modules/balance/balance.entity'
-import { Config } from 'modules/config/config.entity'
-import { Feedback } from 'modules/feedback/feedback.entity'
-import { Issue } from 'modules/issue/issue.entity'
-import { Key } from 'modules/key/key.entity'
-import { Transaction } from 'modules/transaction/transaction.entity'
-import { User } from 'modules/user/user.entity'
-import { VipBuyHistory } from 'modules/vip-buy-history/vip-buy-history.entity'
-import { Vip } from 'modules/vip/vip.entity'
+import ENV from 'constants/environment'
 import { DataSource } from 'typeorm'
 
 const AppDataSource = new DataSource({
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  database: 'test',
+  host: ENV.DB_HOST,
+  port: +ENV.DB_PORT,
+  username: ENV.DB_USERNAME,
+  database: ENV.DB_HOST,
+  password: ENV.DB_PASSWORD,
   entities: ['src/modules/*/*.entity.ts'],
-  // entities: [User],
   migrations: ['database/migrations/*.ts'],
 })
 
