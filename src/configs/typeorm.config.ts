@@ -6,7 +6,7 @@ const AppDataSource = new DataSource({
   host: ENV.DB_HOST,
   port: +ENV.DB_PORT,
   username: ENV.DB_USERNAME,
-  database: ENV.DB_HOST,
+  database: ENV.DB_NAME,
   password: ENV.DB_PASSWORD,
   entities: ['src/modules/*/*.entity.ts'],
   migrations: ['database/migrations/*.ts'],
