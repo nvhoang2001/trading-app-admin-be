@@ -18,17 +18,32 @@
 			"User": {
 				"properties": {
 					"id": {
-						"type": "string"
+						"type": "number",
+						"format": "double"
 					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
 					},
+					"createdBy": {
+						"type": "string"
+					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time"
 					},
+					"updatedBy": {
+						"type": "string"
+					},
 					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vipId": {
+						"type": "number",
+						"format": "double"
+					},
+					"vipRegisterTime": {
 						"type": "string",
 						"format": "date-time"
 					},
@@ -43,6 +58,27 @@
 					},
 					"role": {
 						"$ref": "#/components/schemas/UserRole"
+					},
+					"vip": {
+						"$ref": "#/components/schemas/Vip"
+					},
+					"vipBuyHistories": {
+						"items": {
+							"$ref": "#/components/schemas/VipBuyHistory"
+						},
+						"type": "array"
+					},
+					"feedbacks": {
+						"items": {
+							"$ref": "#/components/schemas/Feedback"
+						},
+						"type": "array"
+					},
+					"createdByUser": {
+						"$ref": "#/components/schemas/User"
+					},
+					"updatedByUser": {
+						"$ref": "#/components/schemas/User"
 					}
 				},
 				"required": [
@@ -50,7 +86,214 @@
 					"createdAt",
 					"username",
 					"password",
-					"role"
+					"role",
+					"vipBuyHistories",
+					"feedbacks"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VipBuyHistoryStatus": {
+				"enum": [
+					1,
+					2,
+					3
+				],
+				"type": "number"
+			},
+			"Vip": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedBy": {
+						"type": "string"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"time": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"description": {
+						"type": "string"
+					},
+					"users": {
+						"items": {
+							"$ref": "#/components/schemas/User"
+						},
+						"type": "array"
+					},
+					"vipBuyHistories": {
+						"items": {
+							"$ref": "#/components/schemas/VipBuyHistory"
+						},
+						"type": "array"
+					},
+					"createdByUser": {
+						"$ref": "#/components/schemas/User"
+					},
+					"updatedByUser": {
+						"$ref": "#/components/schemas/User"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"time",
+					"price",
+					"users",
+					"vipBuyHistories"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VipBuyHistory": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedBy": {
+						"type": "string"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vipId": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					},
+					"status": {
+						"$ref": "#/components/schemas/VipBuyHistoryStatus"
+					},
+					"note": {
+						"type": "string"
+					},
+					"vip": {
+						"$ref": "#/components/schemas/Vip"
+					},
+					"user": {
+						"$ref": "#/components/schemas/Vip"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"vipId",
+					"userId",
+					"status",
+					"vip",
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FeedBackStatus": {
+				"enum": [
+					1,
+					2
+				],
+				"type": "number"
+			},
+			"Feedback": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"createdBy": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedBy": {
+						"type": "string"
+					},
+					"deletedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					},
+					"email": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"reply": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/FeedBackStatus"
+					},
+					"note": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"createdByUser": {
+						"$ref": "#/components/schemas/User"
+					},
+					"updatedByUser": {
+						"$ref": "#/components/schemas/User"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"userId",
+					"email",
+					"status",
+					"title",
+					"user"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -96,6 +339,46 @@
 					"username",
 					"password"
 				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OrderBy": {
+				"enum": [
+					"ASC",
+					"DESC"
+				],
+				"type": "string"
+			},
+			"UserArgs": {
+				"properties": {
+					"offset": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"orderBy": {
+						"$ref": "#/components/schemas/OrderBy"
+					},
+					"sortBy": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"vipId": {
+						"type": "string"
+					},
+					"vipRegisterTime": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -180,8 +463,31 @@
 			"get": {
 				"operationId": "GetAll",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"total": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/User"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"total",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -191,10 +497,102 @@
 				"parameters": [
 					{
 						"in": "query",
-						"name": "name",
+						"name": "offset",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/OrderBy"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortBy",
 						"required": false,
 						"schema": {
 							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "username",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "role",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/UserRole"
+						}
+					},
+					{
+						"in": "query",
+						"name": "vipId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "vipRegisterTime",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "GetOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {},
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]

@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Path, Post, Query, Route, SuccessResponse, Tags } from 'tsoa'
-import { User } from './dto/user.dto'
+import { Controller, Get, Path, Queries, Route, Tags } from 'tsoa'
+import { UserArgs } from './dto/user.args'
 import { UserService } from './user.service'
 
 @Route('users')
@@ -13,7 +13,12 @@ export class UsersController extends Controller {
   }
 
   @Get()
-  public async getAll(@Query() name?: string) {
-    return this.service.getAll()
+  public async getAll(@Queries() queries: UserArgs) {
+    return this.service.getAll(queries)
+  }
+
+  @Get('{id}')
+  public async getOne(@Path() id: number) {
+    return this.service.getOne(id)
   }
 }

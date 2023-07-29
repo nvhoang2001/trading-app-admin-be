@@ -19,14 +19,95 @@ const models: TsoaRoute.Models = {
     "User": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
+            "id": {"dataType":"double","required":true},
             "createdAt": {"dataType":"datetime","required":true},
+            "createdBy": {"dataType":"string"},
             "updatedAt": {"dataType":"datetime"},
+            "updatedBy": {"dataType":"string"},
             "deletedAt": {"dataType":"datetime"},
+            "vipId": {"dataType":"double"},
+            "vipRegisterTime": {"dataType":"datetime"},
             "username": {"dataType":"string","required":true},
             "password": {"dataType":"string","required":true},
             "avatar": {"dataType":"string"},
             "role": {"ref":"UserRole","required":true},
+            "vip": {"ref":"Vip"},
+            "vipBuyHistories": {"dataType":"array","array":{"dataType":"refObject","ref":"VipBuyHistory"},"required":true},
+            "feedbacks": {"dataType":"array","array":{"dataType":"refObject","ref":"Feedback"},"required":true},
+            "createdByUser": {"ref":"User"},
+            "updatedByUser": {"ref":"User"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VipBuyHistoryStatus": {
+        "dataType": "refEnum",
+        "enums": [1,2,3],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Vip": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "createdBy": {"dataType":"string"},
+            "updatedAt": {"dataType":"datetime"},
+            "updatedBy": {"dataType":"string"},
+            "deletedAt": {"dataType":"datetime"},
+            "time": {"dataType":"datetime","required":true},
+            "price": {"dataType":"double","required":true},
+            "description": {"dataType":"string"},
+            "users": {"dataType":"array","array":{"dataType":"refObject","ref":"User"},"required":true},
+            "vipBuyHistories": {"dataType":"array","array":{"dataType":"refObject","ref":"VipBuyHistory"},"required":true},
+            "createdByUser": {"ref":"User"},
+            "updatedByUser": {"ref":"User"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VipBuyHistory": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "createdBy": {"dataType":"string"},
+            "updatedAt": {"dataType":"datetime"},
+            "updatedBy": {"dataType":"string"},
+            "deletedAt": {"dataType":"datetime"},
+            "vipId": {"dataType":"double","required":true},
+            "userId": {"dataType":"double","required":true},
+            "status": {"ref":"VipBuyHistoryStatus","required":true},
+            "note": {"dataType":"string"},
+            "vip": {"ref":"Vip","required":true},
+            "user": {"ref":"Vip","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FeedBackStatus": {
+        "dataType": "refEnum",
+        "enums": [1,2],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Feedback": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double","required":true},
+            "createdAt": {"dataType":"datetime","required":true},
+            "createdBy": {"dataType":"string"},
+            "updatedAt": {"dataType":"datetime"},
+            "updatedBy": {"dataType":"string"},
+            "deletedAt": {"dataType":"datetime"},
+            "userId": {"dataType":"double","required":true},
+            "email": {"dataType":"string","required":true},
+            "description": {"dataType":"string"},
+            "reply": {"dataType":"string"},
+            "status": {"ref":"FeedBackStatus","required":true},
+            "note": {"dataType":"string"},
+            "title": {"dataType":"string","required":true},
+            "user": {"ref":"User","required":true},
+            "createdByUser": {"ref":"User"},
+            "updatedByUser": {"ref":"User"},
         },
         "additionalProperties": false,
     },
@@ -53,6 +134,26 @@ const models: TsoaRoute.Models = {
         "properties": {
             "username": {"dataType":"string","required":true},
             "password": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "OrderBy": {
+        "dataType": "refEnum",
+        "enums": ["ASC","DESC"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserArgs": {
+        "dataType": "refObject",
+        "properties": {
+            "offset": {"dataType":"double"},
+            "limit": {"dataType":"double"},
+            "orderBy": {"ref":"OrderBy"},
+            "sortBy": {"dataType":"string"},
+            "username": {"dataType":"string"},
+            "role": {"ref":"UserRole"},
+            "vipId": {"dataType":"string"},
+            "vipRegisterTime": {"dataType":"datetime"},
         },
         "additionalProperties": false,
     },
@@ -123,7 +224,7 @@ export function RegisterRoutes(app: Router) {
 
             function UsersController_getAll(request: any, response: any, next: any) {
             const args = {
-                    name: {"in":"query","name":"name","dataType":"string"},
+                    queries: {"in":"queries","name":"queries","required":true,"ref":"UserArgs"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -136,6 +237,31 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getAll.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/users/:id',
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.getOne)),
+
+            function UsersController_getOne(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UsersController();
+
+
+              const promise = controller.getOne.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

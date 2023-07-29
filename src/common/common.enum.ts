@@ -39,3 +39,9 @@ export enum TransactionType {
   Buy = 1,
   Sell = 2,
 }
+
+// ==========================================
+export enum OrderBy {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
