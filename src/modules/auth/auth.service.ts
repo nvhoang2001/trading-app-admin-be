@@ -1,25 +1,26 @@
-import AppDataSource from 'configs/typeorm.config';
-import { User } from 'modules/user/user.entity';
-import { Repository } from 'typeorm';
-import { LoginInput } from './dto/auth.input';
-import { compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import ENVS from 'constants/environment';
-import { LoginDTO } from './dto/auth.dto';
+import { compare } from 'bcrypt'
+import AppDataSource from 'configs/typeorm.config'
+import ENV from 'constants/environment'
+import { sign } from 'jsonwebtoken'
+import { User } from 'modules/user/user.entity'
+import { Repository } from 'typeorm'
+import { showError } from 'utils/show-error'
+import { LoginDTO } from './dto/auth.dto'
+import { LoginInput } from './dto/auth.input'
 
-export class AuthService  {
-  protected repo: Repository<User>;
+export class AuthService {
+  protected repo: Repository<User>
 
   constructor() {
-    this.repo = AppDataSource.getRepository(User) 
-	}
+    this.repo = AppDataSource.getRepository(User)
+  }
 
   async test() {
     const test = await this.repo.find()
 
-    console.log("22343");
+    console.log('22343')
 
-    console.log(test);
+    console.log(test)
     return test
   }
 
@@ -41,30 +42,26 @@ export class AuthService  {
   // }
 
   async login(body: LoginInput): Promise<LoginDTO> {
-    const { username, password } = body;
-    const dto = new LoginInput();
-    dto.username = username;
-    dto.password = password;
+    const { username, password } = body
+    const dto = new LoginInput()
+    dto.username = username
+    dto.password = password
 
     // await validateOrReject(dto);
 
-    const user = await this.repo.findOneBy({ username });
-    if (!user) {
-      return {}
-      // return ResponseUtil.sendErrror(res, "Invalid credentials", 401, null);
-    }
-    let passwordMatches = await compare(password, user.password);
-    if (!passwordMatches) {
-      return {}
-      // return ResponseUtil.sendErrror(res, "Invalid credentials", 401, null);
-    }
-    let accessToken = sign({ id: user.id }, ENVS.ACCESS_TOKEN_SECRET, {
-      expiresIn: "3d",
-    });
+    const user = await this.repo.findOneBy({ username })
+    if (!user) return showError('Invalid credentials', 401)
+
+    let passwordMatches = await compare(password, user.password)
+    if (!passwordMatches) return showError('Invalid credentials', 401)
+
+    let accessToken = sign({ id: user.id }, ENV.ACCESS_TOKEN_SECRET, {
+      expiresIn: '3d',
+    })
 
     return {
       accessToken,
-      user
+      user,
     }
   }
 }

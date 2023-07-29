@@ -158,6 +158,27 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserInput": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "avatar": {"dataType":"string"},
+            "role": {"ref":"UserRole"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UserUpdateInput": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+            "avatar": {"dataType":"string"},
+            "role": {"ref":"UserRole"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -220,9 +241,9 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/users',
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
-            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.getAll)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.search)),
 
-            function UsersController_getAll(request: any, response: any, next: any) {
+            function UsersController_search(request: any, response: any, next: any) {
             const args = {
                     queries: {"in":"queries","name":"queries","required":true,"ref":"UserArgs"},
             };
@@ -236,7 +257,7 @@ export function RegisterRoutes(app: Router) {
                 const controller = new UsersController();
 
 
-              const promise = controller.getAll.apply(controller, validatedArgs as any);
+              const promise = controller.search.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -262,6 +283,82 @@ export function RegisterRoutes(app: Router) {
 
 
               const promise = controller.getOne.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/users',
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.createOne)),
+
+            function UsersController_createOne(request: any, response: any, next: any) {
+            const args = {
+                    input: {"in":"body","name":"input","required":true,"ref":"UserInput"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UsersController();
+
+
+              const promise = controller.createOne.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/users/:id',
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.updateOne)),
+
+            function UsersController_updateOne(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    input: {"in":"body","name":"input","required":true,"ref":"UserUpdateInput"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UsersController();
+
+
+              const promise = controller.updateOne.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/users/:id',
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.deleteOne)),
+
+            function UsersController_deleteOne(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new UsersController();
+
+
+              const promise = controller.deleteOne.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

@@ -381,6 +381,46 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UserInput": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UserUpdateInput": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					}
+				},
+				"required": [
+					"username"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -461,7 +501,7 @@
 		},
 		"/users": {
 			"get": {
-				"operationId": "GetAll",
+				"operationId": "Search",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -469,16 +509,8 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"total": {
-											"type": "number",
-											"format": "double"
-										},
-										"data": {
-											"items": {
-												"$ref": "#/components/schemas/User"
-											},
-											"type": "array"
-										}
+										"total": {},
+										"data": {}
 									},
 									"required": [
 										"total",
@@ -563,6 +595,36 @@
 						}
 					}
 				]
+			},
+			"post": {
+				"operationId": "CreateOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserInput"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users/{id}": {
@@ -576,6 +638,76 @@
 								"schema": {
 									"properties": {},
 									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserUpdateInput"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
 								}
 							}
 						}
